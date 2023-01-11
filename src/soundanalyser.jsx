@@ -15,8 +15,8 @@ export async function createAudio() {
     const bufferLength = analyser.frequencyBinCount
 
     source.connect(analyser)
-    analyser.connect(gain)
-    //analyser.connect(gain)
+    source.connect(gain)
+
     // The data array receive the audio frequencies
     const data = new Uint8Array(analyser.frequencyBinCount)
     analyser.getByteTimeDomainData(data)

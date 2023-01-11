@@ -10,8 +10,6 @@ export const WavePoints3 = () => {
     // integrates them with React suspense. You can use it as-is with or without r3f.
     const { gain, context, update, data } = suspend(() => createAudio(), [])
     useEffect(() => {
-        // Connect the gain node, which plays the audio
-        gain.connect(context.destination)
         // Disconnect it on unmount
         return () => gain.disconnect()
     }, [gain, context])

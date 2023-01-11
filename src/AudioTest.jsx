@@ -6,8 +6,6 @@ import { createAudio } from './soundanalyser'
 export const AudioTest = () => {
     const { gain, context, update, data } = suspend(() => createAudio(), [])
     useEffect(() => {
-        // Connect the gain node, which plays the audio
-        gain.connect(context.destination)
         // Disconnect it on unmount
         return () => gain.disconnect()
     }, [gain, context])

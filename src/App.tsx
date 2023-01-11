@@ -18,7 +18,7 @@ function App() {
                 <Sparkles color={'#302e2e'} speed={0.2} />
 
                 <EffectComposer>
-                    <Glitch strength={0.6} chromaticAberrationOffset={new Vector2(2, 2)} />
+                    <Glitch strength={new Vector2(0.6, 0.6)} chromaticAberrationOffset={new Vector2(2, 2)} />
                 </EffectComposer>
             </Suspense>
         </Canvas>

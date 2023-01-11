@@ -4,8 +4,11 @@ import { Track } from '../pages/Track'
 import { RiksklubbLogo } from './RiksklubbLogo'
 
 export const VisualsRouter = () => {
+    /* ideer
+        - Masse "høyde"-grafer i et landskap. Støy med gradient maps
+     */
     const [currentVisual, setCurrentVisual] = useState(0)
-    const visuals = [Track, RiksklubbLogo, Track]
+    const visuals = [Track, RiksklubbLogo, Track, RiksklubbLogo]
     let timeToNextVisual = 4 + Math.random() * 4 - Math.random() * 4
 
     const switchVisual = () => {

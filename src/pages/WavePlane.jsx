@@ -2,7 +2,7 @@ import { Plane, shaderMaterial } from '@react-three/drei'
 import { extend, useFrame } from '@react-three/fiber'
 import { useEffect, useRef } from 'react'
 import { suspend } from 'suspend-react'
-import { fragmentShader, vertexShader } from '../components/planeshader'
+import { fragmentShader, vertexShader } from '../components/Planeshader'
 import { createAudio } from '../soundanalyser'
 
 export const WavePlane = () => {

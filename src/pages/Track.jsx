@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { useFrame } from '@react-three/fiber'
+import { useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useRef } from 'react'
 import { createAudio } from '../soundanalyser'
 import { suspend } from 'suspend-react'
@@ -13,9 +13,11 @@ export const Track = ({
     ...props
 }) => {
     const ref = useRef()
+    const groupRef = useRef()
     // suspend-react is the library that r3f uses internally for useLoader. It caches promises and
     // integrates them with React suspense. You can use it as-is with or without r3f.
     const { gain, context, update, data } = suspend(() => createAudio(), [])
+    const { camera } = useThree()
     useEffect(() => {
         // Connect the gain node, which plays the audio
         gain.connect(context.destination)
@@ -34,11 +36,17 @@ export const Track = ({
         // Set the hue according to the frequency average
         ref.current.material.color.setHSL(avg / 500, 0.75, 0.75)
         ref.current.instanceMatrix.needsUpdate = true
+
+        groupRef.current.rotation.z = camera.rotation.z
+        groupRef.current.rotation.y = camera.rotation.y
+        groupRef.current.rotation.x = camera.rotation.x
     })
     return (
-        <instancedMesh ref={ref} args={[null, null, data.length]} {...props}>
-            <planeGeometry args={[width, height]} />
-            <meshBasicMaterial toneMapped={false} />
-        </instancedMesh>
+        <group position={[0, 0, 0]} scale={[2, 2, 2]} ref={groupRef}>
+            <instancedMesh ref={ref} args={[null, null, data.length]} {...props}>
+                <planeGeometry args={[width, height]} />
+                <meshBasicMaterial toneMapped={false} />
+            </instancedMesh>
+        </group>
     )
 }

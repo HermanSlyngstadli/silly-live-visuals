@@ -1,14 +1,19 @@
 import { useFrame } from '@react-three/fiber'
 import React, { useState } from 'react'
-import { Track } from '../pages/Track'
-import { RiksklubbLogo } from './RiksklubbLogo'
+import { TwirlBall } from '../pages/TwirlBall'
+import { WavePlane } from '../pages/WavePlane'
+import { WavePlane2 } from '../pages/WavePlane2'
+import { WavePlane3 } from '../pages/WavePlane3'
+import { WavePoints } from '../pages/WavePoints'
+import { WavePoints2 } from '../pages/WavePoints2'
+import { WavePoints3 } from '../pages/WavePoints3'
 
 export const VisualsRouter = () => {
     /* ideer
-        - Masse "høyde"-grafer i et landskap. Støy med gradient maps
+        - Masse "høyde"-grafer i et landskap (som kart liksom). Støy med gradient maps
      */
     const [currentVisual, setCurrentVisual] = useState(0)
-    const visuals = [Track, RiksklubbLogo, Track, RiksklubbLogo]
+    const visuals = [TwirlBall, WavePlane, WavePlane2, WavePlane3, WavePoints, WavePoints2, WavePoints3]
     let timeToNextVisual = 4 + Math.random() * 4 - Math.random() * 4
 
     const switchVisual = () => {
@@ -28,6 +33,5 @@ export const VisualsRouter = () => {
             switchVisual()
         }
     })
-
     return <>{React.createElement(visuals[currentVisual], {})}</>
 }

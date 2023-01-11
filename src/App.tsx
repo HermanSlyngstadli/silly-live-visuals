@@ -6,6 +6,7 @@ import { OrbitControls, PerspectiveCamera, Sparkles } from '@react-three/drei'
 import { VisualsRouter } from './components/VisualsRouter'
 import { AudioTest } from './AudioTest'
 import './App.css'
+import { Track } from './pages/Track'
 
 function App() {
     return (
@@ -13,9 +14,10 @@ function App() {
             <AudioTest />
             <Suspense fallback={null}>
                 <OrbitControls />
-                <PerspectiveCamera makeDefault position={[0, 0, 1]} far={4000} />
+                <PerspectiveCamera makeDefault position={[0, 1, 1]} far={4000} />
                 <VisualsRouter />
                 <Sparkles color={'#302e2e'} speed={0.2} />
+                <Track />
 
                 <EffectComposer>
                     <Glitch strength={new Vector2(0.6, 0.6)} chromaticAberrationOffset={new Vector2(2, 2)} />

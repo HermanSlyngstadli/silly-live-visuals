@@ -13,7 +13,7 @@ function App() {
         <Canvas style={{ background: '#071e22' }}>
             <AudioTest />
             <Suspense fallback={null}>
-                <OrbitControls />
+                <OrbitControls autoRotate={true} autoRotateSpeed={0.5} />
                 <PerspectiveCamera makeDefault position={[0, 1, 1]} far={4000} />
                 <VisualsRouter />
                 <Sparkles color={'#302e2e'} speed={0.2} />

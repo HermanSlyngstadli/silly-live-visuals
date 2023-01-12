@@ -27,7 +27,8 @@ export const Track = ({
         let avg = update()
         // Distribute the instanced planes according to the frequency daza
         for (let i = 0; i < data.length; i++) {
-            obj.position.set(i * width * space - (data.length * width * space) / 2, data[i] / y, 0)
+            obj.position.set(i * width * space - (data.length * width * space) / 2, -0.1 + (1.3 * data[i]) / y, 0)
+            obj.scale.set(1, 0.5 + (data[i] / y) * 60, 1)
             obj.updateMatrix()
             ref.current.setMatrixAt(i, obj.matrix)
         }
@@ -43,7 +44,7 @@ export const Track = ({
         <group position={[0, 0, 0]} scale={[2, 2, 2]} ref={groupRef}>
             <instancedMesh ref={ref} args={[null, null, data.length]} {...props}>
                 <planeGeometry args={[width, height]} />
-                <meshBasicMaterial toneMapped={false} />
+                <meshBasicMaterial toneMapped={false} transparent opacity={0.6} />
             </instancedMesh>
         </group>
     )

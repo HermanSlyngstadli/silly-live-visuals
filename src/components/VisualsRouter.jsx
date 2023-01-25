@@ -14,6 +14,7 @@ export const VisualsRouter = () => {
      */
     const [currentVisual, setCurrentVisual] = useState(0)
     const visuals = [TwirlBall, WavePlane, WavePlane2, WavePlane3, WavePoints, WavePoints2, WavePoints3]
+    //const visuals = [TwirlBall]
     let timeToNextVisual = 4 + Math.random() * 4 - Math.random() * 4
 
     const switchVisual = () => {

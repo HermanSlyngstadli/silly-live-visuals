@@ -6,7 +6,7 @@ import { suspend } from 'suspend-react'
 
 export const Equalizer = ({
     y = 2500,
-    space = 1.4,
+    space = 1.8,
     width = 0.005,
     height = 0.05,
     obj = new THREE.Object3D(),

@@ -1,6 +1,6 @@
-import React, { Suspense } from 'react'
+import React, { Suspense, useEffect } from 'react'
 import { Vector2 } from 'three'
-import { Canvas } from '@react-three/fiber'
+import { Canvas, useFrame } from '@react-three/fiber'
 import { EffectComposer, Glitch } from '@react-three/postprocessing'
 import { OrbitControls, PerspectiveCamera, Sparkles } from '@react-three/drei'
 import { VisualsRouter } from './components/VisualsRouter'
@@ -8,6 +8,7 @@ import { AudioTest } from './AudioTest'
 import './App.css'
 import { HudGraphics } from './components/HudGraphics'
 import { Hud } from './components/Hud'
+import { Effects } from './components/Effects'
 
 function App() {
     return (
@@ -20,9 +21,7 @@ function App() {
                     <VisualsRouter />
                     <Sparkles color={'#302e2e'} speed={0.2} />
                     <Hud />
-                    <EffectComposer>
-                        <Glitch strength={new Vector2(0.6, 0.6)} chromaticAberrationOffset={new Vector2(2, 2)} />
-                    </EffectComposer>
+                    <Effects />
                 </Suspense>
             </Canvas>
             <HudGraphics />

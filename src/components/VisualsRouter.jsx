@@ -7,14 +7,26 @@ import { WavePlane3 } from '../pages/WavePlane3'
 import { WavePoints } from '../pages/WavePoints'
 import { WavePoints2 } from '../pages/WavePoints2'
 import { WavePoints3 } from '../pages/WavePoints3'
+import { GlobeRiksklubben } from '../pages/GlobeRiksklubben'
+import { LoadingRiksklubben } from '../pages/LoadingRiksklubben'
 
 export const VisualsRouter = () => {
     /* ideer
         - Masse "høyde"-grafer i et landskap (som kart liksom). Støy med gradient maps
      */
     const [currentVisual, setCurrentVisual] = useState(0)
-    const visuals = [TwirlBall, WavePlane, WavePlane2, WavePlane3, WavePoints, WavePoints2, WavePoints3]
-    //const visuals = [TwirlBall]
+    const visuals = [
+        GlobeRiksklubben,
+        TwirlBall,
+        WavePlane,
+        WavePlane2,
+        WavePlane3,
+        LoadingRiksklubben,
+        WavePoints,
+        WavePoints2,
+        WavePoints3,
+    ]
+    //const visuals = [LoadingRiksklubben]
     let timeToNextVisual = 4 + Math.random() * 4 - Math.random() * 4
 
     const switchVisual = () => {

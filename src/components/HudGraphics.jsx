@@ -34,14 +34,13 @@ export const HudGraphics = () => {
 
     const getCurrentArtist = () => {
         const date = new Date()
-        const counter = 14
-        if (date.getHours() <= counter) {
+        if (date.getHours() > 2) {
             return artist.rytme.name
-        } else if (date.getHours() === counter + 1) {
+        } else if (date.getHours() === 0) {
             return artist.bukk.name
-        } else if (date.getHours() === counter + 2) {
+        } else if (date.getHours() === 1) {
             return artist.james.name
-        } else if (date.getHours() >= counter + 3) {
+        } else if (date.getHours() === 2) {
             return artist.berg.name
         }
     }

@@ -20,12 +20,8 @@ export const Effects = () => {
     })
     return (
         <EffectComposer>
-            <Glitch
-                ref={glitchRef}
-                strength={new Vector2(6.0, 6.0)}
-                chromaticAberrationOffset={new Vector2(200, 200)}
-            />
-            <Pixelation granularity={3} />
+            <Glitch ref={glitchRef} strength={new Vector2(6.0, 6.0)} />
+            <Pixelation granularity={2} />
             <Bloom intensity={0.5} />
         </EffectComposer>
     )

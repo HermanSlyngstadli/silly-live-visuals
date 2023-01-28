@@ -2,8 +2,21 @@ import { useFrame } from '@react-three/fiber'
 import { useState } from 'react'
 
 export const HudGraphics = () => {
+    const getDisplayTime = () => {
+        const date = new Date()
+        let h = date.getHours()
+        let m = date.getMinutes()
+        h = h < 10 ? '0' + h : h
+        m = m < 10 ? '0' + m : m
+
+        return h + ':' + m
+    }
     const [currentArtist, setCurrentArtist] = useState(null)
-    const [currentTime, setCurrentTime] = useState({ hours: new Date().getHours(), mintues: new Date().getMinutes() })
+    const [currentTime, setCurrentTime] = useState({
+        hours: new Date().getHours(),
+        mintues: new Date().getMinutes(),
+        displayTime: getDisplayTime(),
+    })
     const artist = {
         rytme: {
             name: 'Døgnrytmer',
@@ -36,7 +49,11 @@ export const HudGraphics = () => {
     const checkArtist = () => {
         if (currentArtist != getCurrentArtist()) setCurrentArtist(getCurrentArtist())
         if (currentTime.minutes != new Date().getMinutes())
-            setCurrentTime({ hours: new Date().getHours(), mintues: new Date().getMinutes() })
+            setCurrentTime({
+                hours: new Date().getHours(),
+                mintues: new Date().getMinutes(),
+                displayTime: getDisplayTime(),
+            })
         setTimeout(() => checkArtist(), 1000 * 60)
         console.log(getCurrentArtist())
     }
@@ -61,9 +78,6 @@ export const HudGraphics = () => {
                 <span style={{ color: 'white', padding: '1rem', display: 'flex', flexDirection: 'column' }}>
                     <span style={{ color: '#bbb', fontSize: '0.75rem' }}>Now playing:</span>
                     <span>{currentArtist}</span>
-                </span>
-                <span style={{ color: 'white', padding: '1rem', fontSize: '0.75rem' }}>
-                    {currentTime.hours + ':' + currentTime.mintues}
                 </span>
                 <span style={{ color: 'white', padding: '1rem', width: '6rem' }}>&nbsp;</span>
             </div>

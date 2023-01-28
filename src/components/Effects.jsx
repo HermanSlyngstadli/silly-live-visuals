@@ -16,11 +16,11 @@ export const Effects = () => {
     useFrame((state) => {
         let avg = update()
         glitchRef.current.strength = new Vector2(avg * avg * 0.0001, avg * avg * 0.0001)
-        //glitchRef.current.chromaticAberrationOffset = new Vector2(avg * avg, avg * avg)
+        glitchRef.current.chromaticAberrationOffset = new Vector2(avg * avg, avg * avg)
     })
     return (
         <EffectComposer>
-            <Glitch ref={glitchRef} strength={new Vector2(6.0, 6.0)} />
+            <Glitch ref={glitchRef} delay={[7, 12]} strength={new Vector2(6.0, 6.0)} />
             <Pixelation granularity={2} />
             <Bloom intensity={0.5} />
         </EffectComposer>

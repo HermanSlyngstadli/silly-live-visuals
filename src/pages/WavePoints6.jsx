@@ -2,8 +2,9 @@ import { useEffect, useMemo, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { suspend } from 'suspend-react'
 import { createAudio } from '../soundanalyser'
+import { Color } from 'three'
 
-export const WavePlane4 = () => {
+export const WavePoints6 = () => {
     const ref = useRef()
     // suspend-react is the library that r3f uses internally for useLoader. It caches promises and
     // integrates them with React suspense. You can use it as-is with or without r3f.
@@ -25,6 +26,8 @@ export const WavePlane4 = () => {
             u_time: {
                 value: 0.0,
             },
+            u_colorA: { value: new Color('#2a4439') },
+            u_colorB: { value: new Color('#FEB3D9') },
         }),
         []
     )
@@ -32,36 +35,44 @@ export const WavePlane4 = () => {
     const vertexShader = `
         uniform float u_time;
 
+        varying float vZ;
         varying vec2 vUv;
 
         void main() {
             vec4 modelPosition = modelMatrix * vec4(position, 1.0);
-            modelPosition.y += sin(modelPosition.x * 4.0 + u_time * 2.0) * 0.2 + sin(modelPosition.z  + u_time * 3.0) * 0.1;
+            modelPosition.y += sin(modelPosition.x * 2.0 + u_time * 2.0) * 0.2;
+            modelPosition.y += sin(modelPosition.z * 5.0 + u_time * 0.3 + modelPosition.x * 1.2) * 0.2;
+            modelPosition.y += cos(modelPosition.z * 15.0 + u_time * 0.1 + modelPosition.x * 14.0) * 0.01;
+
+            modelPosition.x = modelPosition.x * modelPosition.x * 1.2;
+            modelPosition.x = modelPosition.x;
+
+            vZ = modelPosition.y;
 
             vec4 viewPosition = viewMatrix * modelPosition;
             vec4 projectedPosition = projectionMatrix * viewPosition;
 
             gl_Position = projectedPosition;
+            gl_PointSize = 2.0;
         }
     `
 
     const fragmentShader = `
-        varying vec2 vUv;
+        uniform vec3 u_colorA;
+        uniform vec3 u_colorB;
+        varying float vZ;
 
-        vec3 colorA = vec3(0.112,0.491,0.952);
-        vec3 colorB = vec3(1.000,0.377,0.752);
 
         void main() {
-            vec3 color = mix(colorA, colorB, vUv.x);
-
-            gl_FragColor = vec4(color,1.0);
+            vec3 color = mix(u_colorA, u_colorB, vZ * 2.0 + 0.5); 
+            gl_FragColor = vec4(color, 1.0);
         }
     `
 
     return (
-        <mesh ref={ref} rotation={[Math.PI / 2, 0, 0]}>
-            <planeGeometry args={[1, 1, 32, 32]} />
+        <points ref={ref} rotation={[Math.PI / 2, 0, 0]}>
+            <planeGeometry args={[3, 3, 128, 128]} />
             <shaderMaterial fragmentShader={fragmentShader} vertexShader={vertexShader} uniforms={uniforms} wireframe />
-        </mesh>
+        </points>
     )
 }

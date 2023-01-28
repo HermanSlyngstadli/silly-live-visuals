@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { suspend } from 'suspend-react'
+import { Color } from 'three'
 import { createAudio } from '../soundanalyser'
 
-export const WavePlane4 = () => {
+export const TwirlBall2 = () => {
     const ref = useRef()
     // suspend-react is the library that r3f uses internally for useLoader. It caches promises and
     // integrates them with React suspense. You can use it as-is with or without r3f.
@@ -25,6 +26,8 @@ export const WavePlane4 = () => {
             u_time: {
                 value: 0.0,
             },
+            u_colorA: { value: new Color('#f4e8ba') },
+            u_colorB: { value: new Color('#FEB3D9') },
         }),
         []
     )
@@ -32,36 +35,49 @@ export const WavePlane4 = () => {
     const vertexShader = `
         uniform float u_time;
 
-        varying vec2 vUv;
+        varying float vZ;
+        varying vec3 v_Normal;
 
         void main() {
+            v_Normal = normal;
+
             vec4 modelPosition = modelMatrix * vec4(position, 1.0);
-            modelPosition.y += sin(modelPosition.x * 4.0 + u_time * 2.0) * 0.2 + sin(modelPosition.z  + u_time * 3.0) * 0.1;
+            vZ = modelPosition.y;
+
+            modelPosition.x = modelPosition.x + normal.x * sin(modelPosition.x + u_time*0.1);
+            modelPosition.y = modelPosition.y + normal.x * sin(modelPosition.y * 4.0 + u_time*0.4);
+            modelPosition.z = modelPosition.z + 2.0 * normal.z * sin(modelPosition.z + u_time * 0.3);
 
             vec4 viewPosition = viewMatrix * modelPosition;
             vec4 projectedPosition = projectionMatrix * viewPosition;
-
+            
             gl_Position = projectedPosition;
+            gl_PointSize = 4.0;
         }
     `
 
     const fragmentShader = `
-        varying vec2 vUv;
+        uniform vec3 u_colorA;
+        uniform vec3 u_colorB;
 
-        vec3 colorA = vec3(0.112,0.491,0.952);
-        vec3 colorB = vec3(1.000,0.377,0.752);
+        varying float vZ;
+        varying vec3 v_Normal;
 
         void main() {
-            vec3 color = mix(colorA, colorB, vUv.x);
-
-            gl_FragColor = vec4(color,1.0);
+            vec3 color = mix(u_colorA, u_colorB, vZ * 2.0 + 0.5); 
+            gl_FragColor = vec4(color, 1.0);
         }
     `
 
     return (
-        <mesh ref={ref} rotation={[Math.PI / 2, 0, 0]}>
-            <planeGeometry args={[1, 1, 32, 32]} />
-            <shaderMaterial fragmentShader={fragmentShader} vertexShader={vertexShader} uniforms={uniforms} wireframe />
-        </mesh>
+        <points ref={ref}>
+            <icosahedronGeometry args={[1, 15]} />
+            <shaderMaterial
+                fragmentShader={fragmentShader}
+                vertexShader={vertexShader}
+                uniforms={uniforms}
+                wireframe={true}
+            />
+        </points>
     )
 }

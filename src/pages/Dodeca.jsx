@@ -2,8 +2,9 @@ import { useEffect, useMemo, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { suspend } from 'suspend-react'
 import { createAudio } from '../soundanalyser'
+import { Color } from 'three'
 
-export const WavePlane4 = () => {
+export const Dodeca = () => {
     const ref = useRef()
     // suspend-react is the library that r3f uses internally for useLoader. It caches promises and
     // integrates them with React suspense. You can use it as-is with or without r3f.
@@ -25,6 +26,7 @@ export const WavePlane4 = () => {
             u_time: {
                 value: 0.0,
             },
+            u_color: { value: new Color('#ff86dd') },
         }),
         []
     )
@@ -36,7 +38,7 @@ export const WavePlane4 = () => {
 
         void main() {
             vec4 modelPosition = modelMatrix * vec4(position, 1.0);
-            modelPosition.y += sin(modelPosition.x * 4.0 + u_time * 2.0) * 0.2 + sin(modelPosition.z  + u_time * 3.0) * 0.1;
+            modelPosition.y += sin(modelPosition.x * 4.0 + u_time * 2.0) * 0.1;
 
             vec4 viewPosition = viewMatrix * modelPosition;
             vec4 projectedPosition = projectionMatrix * viewPosition;
@@ -46,21 +48,18 @@ export const WavePlane4 = () => {
     `
 
     const fragmentShader = `
+        uniform vec3 u_color;
+        
         varying vec2 vUv;
 
-        vec3 colorA = vec3(0.112,0.491,0.952);
-        vec3 colorB = vec3(1.000,0.377,0.752);
-
         void main() {
-            vec3 color = mix(colorA, colorB, vUv.x);
-
-            gl_FragColor = vec4(color,1.0);
+            gl_FragColor = vec4(u_color, 1.0);
         }
     `
 
     return (
         <mesh ref={ref} rotation={[Math.PI / 2, 0, 0]}>
-            <planeGeometry args={[1, 1, 32, 32]} />
+            <dodecahedronGeometry args={[0.4, 3]} />
             <shaderMaterial fragmentShader={fragmentShader} vertexShader={vertexShader} uniforms={uniforms} wireframe />
         </mesh>
     )

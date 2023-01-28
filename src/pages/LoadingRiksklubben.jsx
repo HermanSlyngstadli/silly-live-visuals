@@ -1,6 +1,6 @@
 import { FloatTV } from '../components/FloatTV'
-import RiksLoader from '../assets/riksklubb-nintendo.mp4'
+import video from '../assets/riksklubb-nintendo.mp4'
 
 export const LoadingRiksklubben = () => {
-    return <FloatTV videoRef={RiksLoader} />
+    return <FloatTV videoRef={video} />
 }

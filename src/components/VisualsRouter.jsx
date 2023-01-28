@@ -4,6 +4,7 @@ import { TwirlBall } from '../pages/TwirlBall'
 import { WavePlane } from '../pages/WavePlane'
 import { WavePlane2 } from '../pages/WavePlane2'
 import { WavePlane3 } from '../pages/WavePlane3'
+//import { WavePlane4 } from '../pages/WavePlane4'
 import { WavePoints } from '../pages/WavePoints'
 import { WavePoints2 } from '../pages/WavePoints2'
 import { WavePoints3 } from '../pages/WavePoints3'
@@ -26,7 +27,7 @@ export const VisualsRouter = () => {
         WavePoints2,
         WavePoints3,
     ]
-    //const visuals = [LoadingRiksklubben]
+    //const visuals = [WavePlane4]
     let timeToNextVisual = 4 + Math.random() * 4 - Math.random() * 4
 
     const switchVisual = () => {

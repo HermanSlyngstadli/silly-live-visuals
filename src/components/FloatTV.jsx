@@ -13,7 +13,7 @@ export const FloatTV = ({ videoRef }) => {
     })
 
     return (
-        <group rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} scale={[0.3, 0.3, 0.3]}>
+        <group rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} scale={[0.5, 0.5, 0.5]}>
             <mesh rotation={[0, 0, 0]} ref={ref}>
                 <planeGeometry args={[3.2, 1.9, 32, 32]} />
                 <meshStandardMaterial emissive={'white'} side={THREE.DoubleSide}>

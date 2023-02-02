@@ -13,19 +13,17 @@ import { WavePoints3 } from '../pages/WavePoints3'
 import { WavePoints4 } from '../pages/WavePoints4'
 import { WavePoints5 } from '../pages/WavePoints5'
 import { WavePoints6 } from '../pages/WavePoints6'
-import { GlobeRiksklubben } from '../pages/GlobeRiksklubben'
-import { LoadingRiksklubben } from '../pages/LoadingRiksklubben'
 import { Dodeca } from '../pages/Dodeca'
 import { Dodeca2 } from '../pages/Dodeca2'
 
 export const VisualsRouter = () => {
     /* ideer
         - Masse "høyde"-grafer i et landskap (som kart liksom). Støy med gradient maps
+        - Diffloosion? haha
      */
     const visualGroupRef = useRef()
     const [currentVisual, setCurrentVisual] = useState(0)
     const visuals = [
-        GlobeRiksklubben,
         TwirlBall2,
         WavePlane,
         WavePlane2,
@@ -33,7 +31,6 @@ export const VisualsRouter = () => {
         WavePlane3,
         Dodeca2,
         WavePoints4,
-        LoadingRiksklubben,
         WavePoints6,
         WavePlane5,
         WavePoints,
@@ -45,8 +42,11 @@ export const VisualsRouter = () => {
     ]
     //const visuals = [WavePoints6]
 
+    const averageTimePerVisual = 10
+    const timeVariancePerVisual = 5
+
     const getRandomTimeToNextVisual = () => {
-        return 30 + Math.random() * 10 - Math.random() * 10
+        return averageTimePerVisual + Math.random() * timeVariancePerVisual - Math.random() * timeVariancePerVisual
     }
     let timeToNextVisual = getRandomTimeToNextVisual()
 

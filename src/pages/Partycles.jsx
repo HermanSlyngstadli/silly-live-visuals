@@ -1,14 +1,13 @@
-import React, { Suspense } from 'react'
-import { Canvas } from '@react-three/fiber'
 import { OrbitControls, PerspectiveCamera, Sparkles } from '@react-three/drei'
-import { VisualsRouter } from './components/VisualsRouter'
-import { AudioTest } from './AudioTest'
-import './App.css'
-import { HudGraphics } from './components/HudGraphics'
-import { Hud } from './components/Hud'
-import { Effects } from './components/Effects'
+import { Canvas } from '@react-three/fiber'
+import { Suspense } from 'react'
+import { AudioTest } from '../AudioTest'
+import { Effects } from '../components/Effects'
+import { Hud } from '../components/Hud'
+import { HudGraphics } from '../components/HudGraphics'
+import { VisualsRouter } from '../components/VisualsRouter'
 
-function App() {
+export const Partycles = () => {
     return (
         <>
             <Canvas style={{ background: '#071e22' }}>
@@ -26,5 +25,3 @@ function App() {
         </>
     )
 }
-
-export default App

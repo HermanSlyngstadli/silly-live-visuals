@@ -1,6 +1,6 @@
 import { useFrame, useThree } from '@react-three/fiber'
 import { useRef } from 'react'
-import { Equalizer } from '../pages/Equalizer'
+import { Equalizer } from '../animations/Equalizer'
 import { RiksklubbLogo } from './RiksklubbLogo'
 
 export const Hud = () => {

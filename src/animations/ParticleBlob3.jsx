@@ -1,26 +1,42 @@
-import React, { useMemo, useRef } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { Color } from 'three'
+import { suspend } from 'suspend-react'
+import { createAudio } from '../soundanalyser'
 
 export const ParticleBlob3 = () => {
     const ref = useRef()
+
+    const { gain, context, update, data } = suspend(() => createAudio(), [])
+
     const uniforms = useMemo(
         () => ({
             u_time: {
                 value: 0.0,
             },
             u_color: { value: new Color('#ff86dd') },
+            u_avgAudio: {
+                value: 0.0,
+            },
         }),
         []
     )
 
+    useEffect(() => {
+        // Disconnect it on unmount
+        return () => gain.disconnect()
+    }, [gain, context])
+
     useFrame((state) => {
+        ref.current.material.uniforms.u_avgAudio.value = update()
+
         const { clock } = state
         ref.current.material.uniforms.u_time.value = clock.getElapsedTime()
     })
 
     const vertexShader = `
         uniform float u_time;
+        uniform float u_avgAudio;
 
         varying vec2 vUv;
         varying float vNoiseValue;
@@ -101,8 +117,8 @@ export const ParticleBlob3 = () => {
         }
 
         void main() {
-            float timeMultiplier = 0.2;
-            float noiseIntensity = 10.0;
+            float timeMultiplier = 0.4;
+            float noiseIntensity =  3.0 * 0.01 * u_avgAudio;
 
             vec4 modelPosition = modelMatrix * vec4(position, 1.0);
 

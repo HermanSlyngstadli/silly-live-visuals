@@ -38,7 +38,7 @@ export const ParticleBlob3 = () => {
         ref.current.material.uniforms.u_avgAudio.value = lerp(
             ref.current.material.uniforms.u_avgAudio.value,
             update(),
-            0.1
+            0.05
         )
 
         const { clock } = state
@@ -48,7 +48,13 @@ export const ParticleBlob3 = () => {
     return (
         <points ref={ref} rotation={[Math.PI / 2, 0, 0]}>
             <icosahedronGeometry args={[0.4, 100]} />
-            <shaderMaterial fragmentShader={fragment} vertexShader={vertex} uniforms={uniforms} wireframe={false} />
+            <shaderMaterial
+                fragmentShader={fragment}
+                vertexShader={vertex}
+                uniforms={uniforms}
+                wireframe={false}
+                lights={false}
+            />
         </points>
     )
 }

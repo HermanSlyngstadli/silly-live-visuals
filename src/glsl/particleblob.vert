@@ -15,15 +15,15 @@ void main() {
     vec4 modelPosition = modelMatrix * vec4(position, 1.0);
 
     vec3 noiseOffset = (position * noiseIntensity + u_time) * vec3(1.0);
-    noiseOffset = position * 3.0 + vec3(1.0) * u_time * 0.3;
+    noiseOffset = position * 3.0 + vec3(1.0) * u_time * 0.01;
     
-    vNoiseValue = cos(position.x * 10.0 + sin(u_time * 0.2) * 20.0)*0.2;
+    vNoiseValue = cos(position.x * 10.0 + sin(u_time * 0.01) * 20.0)*0.2;
     vNoiseValue = vNoiseValue+cnoise(noiseOffset*2.0)*u_avgAudio*0.01;
     vNoiseValue = vNoiseValue+cnoise(noiseOffset);
     vNoiseValue = cnoise(vec3(vNoiseValue) * 2.0);
     vNoiseValue = abs(vNoiseValue);
 
-    vNoiseValue = vNoiseValue * 0.9 * sin(u_time * 0.2) + sin(position.x * 40.0 + sin(u_time * 0.6) * 20.0)*0.2;
+    vNoiseValue = vNoiseValue * 0.9 * sin(u_time * 0.01) + sin(position.x * 40.0 + sin(u_time * 0.1) * 10.0)*0.2 + snoise(noiseOffset*0.9+u_time*0.5)*u_avgAudio*0.01;
 
     vec3 weightedNormal = normal * vNoiseValue * 0.1;
     
@@ -31,7 +31,7 @@ void main() {
     vec4 viewPosition = viewMatrix * modelPosition;
     vec4 projectedPosition = projectionMatrix * viewPosition;
 
-    gl_PointSize = 1.0;
+    gl_PointSize = 2.0;
 
     gl_Position = projectedPosition;
 }
